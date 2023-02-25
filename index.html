@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Gulupa</title>
+    <link rel="stylesheet" href="CSS/Style.css">
+</head>
+
+<body id="body">
+    <header class="cabezote">
+        <a href="index.html">GULUPA</a>
+        <form class="busqueda" role="search">
+            <input class="barraBusqueda" type="search" placeholder="¿Qué fruta deseas buscar?" aria-label="">
+            <button class="boton" type="submit" ><img src="imagenes/magnifying-glass-solid.svg" alt="Imagen de buscar"></button>
+        </form>
+        <div class="carrito"><img src="imagenes/cart-shopping-solid.svg" alt="imagen de un carrito de compras" onclick="comprar()"></div>
+
+    </header>
+    <div class="cuerpo">
+    <div id="container" class="container">
+    </div>
+    </div>
+    <div id="mostrarCarrito">
+        <div id="tarjetaCarrito"></div>
+        <button id="cerrar" onclick="cerrarCarrito()" class="boton">X</button>
+    </div>
+    <script src="JS/Main.js"></script>
+</body>
+
+</html>

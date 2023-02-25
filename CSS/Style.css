@@ -1,0 +1,243 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+body{
+    overflow-x: hidden;
+}
+.cabezote{
+    position: fixed;
+    top: o;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.6s;
+    padding: 30px 100px;
+    background-color: rgb(48, 47, 47);
+    z-index: 10000000;
+}
+.cabezote a{
+    color: whitesmoke;
+    text-decoration: none;
+    font-size: 15pt;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+.barraBusqueda{
+    padding: 10px;
+    background-color: rgba(237, 237, 237, 0.2);
+    color: antiquewhite;
+    border-radius: 30px;
+    width: 300px;
+    margin-right: 17px;
+
+}
+.carrito {
+    background-color: transparent;
+    width: 30px;
+}
+.carrito img{
+    width: 100%;
+}
+.claro{
+    padding: 10px 100px;
+    background-color: whitesmoke;
+}
+.claro a{
+    color: blueviolet;
+}
+.barraBusqueda::placeholder{
+    color: rgba(245, 245, 245, 0.6);
+}
+.busqueda{
+    display: flex;
+}
+.boton{
+    background-color: transparent;
+    width: 25px;
+    color: whitesmoke;
+    border: 0;
+    transition: 0.6s;
+
+}
+.boton img {
+    width: 100%;
+    padding-top: 3px;
+}
+.claro .barraBusqueda{
+    background-color: rgba(137, 43, 226, 0.3);
+    border: none;
+    color: blueviolet;
+}
+.claro .barraBusqueda::placeholder{
+    color: rgba(137, 43, 226, 0.4);
+}
+.claro .boton, .claro .carrito{
+    background-color: blueviolet;
+}
+.boton:hover{
+width: 40px;
+transition: 0.6s;
+}
+.claro img{
+    width: 60%;
+}
+.claro .carrito{
+    padding: 3px;
+    width: 40px;
+}
+.carrito:hover{
+    width: 50px;
+    transition: 0.6s;
+    }
+.cuerpo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 100px;
+}
+
+.container{
+    position: relative;
+    width: 1280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.card{
+    position: relative;
+    width: 200px;
+    height: 350px;
+    background-color: rgb(31, 31, 31);
+    margin: 10px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.cajaImagen{
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+transition: 0.5s;
+z-index: 1000000;
+border-radius: 20px;
+overflow: hidden;
+transform-origin: top;
+
+}
+.card:hover .cajaImagen{
+
+    transform: translateY(10px) scale(0.6);
+}
+.cajaImagen img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    object-fit: cover;
+}
+.contenido{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    padding-bottom: 15px;
+
+}
+.detalles{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+    color: rgba(255, 255, 255, 0.623);
+flex-direction: column;
+}
+.detalles p{
+    font-size: 8pt;
+    width: 90%;
+
+}
+.detalles h5{
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: whitesmoke;
+}
+.botonCarrito input{
+margin: 5px;
+padding: 10px;
+border-radius: 10px;
+background-color: coral;
+color: white;
+border: 0;
+}
+.botonCarrito input:hover{
+    background-color: blueviolet;
+}
+#mostrarCarrito{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10000000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    
+    
+}
+#tarjetaCarrito{
+margin: auto;
+
+width: 50%;
+height: 80%;
+background-color: whitesmoke;
+border-radius: 20px;
+overflow-x: hidden;
+}
+.orden{
+    width: 100%;
+    height: 10%;
+    background-color: rgba(255, 127, 80, 0.301);
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.infoCarrito{
+    display: flex;
+    justify-content: space-around;
+    
+}
+.infoCarrito p{
+    margin-left: 30px;
+}
+#cerrar{
+    position: absolute;
+    top: 83px;
+    margin: auto;
+    color: blueviolet;
+    font-weight: bold;
+}
+#cerrar:hover{
+    font-size: 15pt;
+    color: coral;
+}
