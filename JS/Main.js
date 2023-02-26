@@ -33,14 +33,24 @@ const productos = [producto1, producto2, producto3, producto4, producto5, produc
 const pulpasArray = [producto1, producto2, producto3, producto4, producto5]
 const heladosArray = [producto6, producto7, producto8, producto9, producto10]
 let pedido = []
-
+if(localStorage.getItem("pedido")){
+    pedido = JSON.parse(localStorage.getItem("pedido"))
+}else{
+    //si no existe, entra al else
+    console.log("Seteamos por primera vez, entra sólo en la primera vez")
+    localStorage.setItem("pedido", JSON.stringify(pedido))
+}
 console.log (pedido)
+
+//let pedidoCarrito = JSON.parse(localStorage.getItem("pedido")) || []
 //declaracion al Dom
 let plantilla = document.getElementById("container")
+let carritoproductos = document.getElementById("tarjetaCarrito")
+
 //let carritoComprar = document.getElementById("tarjetaCarrito")
 
 function catalogoProductos(productos) {
-
+   
     for (let fruta of productos) {
         let plantillaCard = document.createElement("div")
         plantillaCard.className = ""
@@ -75,9 +85,11 @@ class Carrito {
     }
     sumaproducto() {
         this.cantidad = this.cantidad + 1
-        localStorage.setItem("Pedido", JSON.stringify (pedido))
+
     }
 }
+
+
 
 function agregarAlCarrito(car) {
     let busquedaCarrito = pedido.find(m => m.producto == car)
@@ -92,6 +104,8 @@ function agregarAlCarrito(car) {
         const agregar = new Carrito(car, 1)
         pedido.push(agregar)
         console.log(pedido)
+        localStorage.setItem("pedido", JSON.stringify (pedido))
+
     }
 }
 
@@ -102,9 +116,11 @@ window.addEventListener("scroll", function () {
 })
 
 function verCarrito() {
+    carritoproductos.innerHTML = ""
     for (item of pedido) {
         let informacionProducto = productos.find(fruta => fruta.id === item.producto)
         let card = document.createElement("div")
+        
         card.className = "orden"
         card.innerHTML = ` <div>
         <div class="infoCarrito">
@@ -112,14 +128,11 @@ function verCarrito() {
         <p>Llevas ${item.cantidad} unidades</p>
         </div>
         </div>`
-        let carritoproductos = document.getElementById("tarjetaCarrito")
         carritoproductos.append(card)
+
     }
     
 }
-
-
-
 
 function cerrarCarrito(){
     document.getElementById("mostrarCarrito").style.display ="none"
@@ -128,30 +141,37 @@ function comprar(){
     document.getElementById("mostrarCarrito").style.display = "flex"
     //document.getElementById("body").style.overflow = "hidden"
     verCarrito(pedido)
-    pedido = JSON.parse(localStorage.getItem("pedido"))
+    //pedido = JSON.parse(localStorage.getItem("pedido"))
 
 }
 
 //Storage y JSON
 //localStorage.setItem("Pedido Guardado", JSON.stringify(pedido))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* 
+
+if(localStorage.getItem("pedido")){
+    pedido = JSON.parse(localStorage.getItem("pedido"))
+}else{
+    //si no existe, entra al else
+    console.log("Seteamos por primera vez, entra sólo en la primera vez")
+    estanteria.push()
+    localStorage.setItem("pedido", JSON.stringify(pedido))
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 localStorage.setItem("Pedido Guardado", JSON.stringify (pedido))
 
 
