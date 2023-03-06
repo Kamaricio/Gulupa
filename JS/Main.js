@@ -17,7 +17,13 @@ const Toast = Swal.mixin({
     }
 })
 
-
+const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+    })
 
 // Funcion constructora
 class Productos {
@@ -48,17 +54,19 @@ const productos = [producto1, producto2, producto3, producto4, producto5, produc
 const pulpasArray = [producto1, producto2, producto3, producto4, producto5]
 const heladosArray = [producto6, producto7, producto8, producto9, producto10]
 let pedido = []
-if(localStorage.getItem("pedido")){
+if (localStorage.getItem("pedido")) {
     pedido = JSON.parse(localStorage.getItem("pedido"))
-}else{
+    console.log (pedido)
+} else {
     localStorage.setItem("pedido", JSON.stringify(pedido))
 }
-console.log (pedido)
+console.log(pedido)
 
 //declaracion al Dom
 let plantilla = document.getElementById("container")
 let carritoproductos = document.getElementById("contenedorPedido")
 let totalCompra = document.getElementById("total")
+let loader = document.getElementById("loader")
 
 //plantilla catalogo de productos
 
@@ -83,12 +91,15 @@ function catalogoProductos(productos) {
 
         let CapturaProductos = document.getElementById("container")
         CapturaProductos.append(plantillaCard)
-        
+
     }
     console.log(plantilla)
 }
-
+setTimeout(()=>{
+    loader.innerHTML=""
+    loader.remove()
 catalogoProductos(productos)
+},4000)
 
 
 class Carrito {
@@ -96,19 +107,24 @@ class Carrito {
         this.producto = producto,
         this.cantidad = cantidad
     }
-    sumaproducto() {
+    sumaProducto() {
         this.cantidad = this.cantidad + 1
+    }
+    restaproducto(){
+        this.cantidad = this.cantidad - 1
     }
 }
 
 
-
 function agregarAlCarrito(car) {
     let busquedaCarrito = pedido.find(m => m.producto == car)
-
+    
+    
     if (busquedaCarrito != undefined) {
+        
         let ubicar = pedido.findIndex(e => e.producto == busquedaCarrito.producto)
-        pedido[ubicar].sumaproducto
+        console.log(ubicar)
+        pedido[ubicar].sumaProducto()
         console.log(pedido)
         Toast.fire({
             icon: 'success',
@@ -118,13 +134,13 @@ function agregarAlCarrito(car) {
     }
     else {
         const agregar = new Carrito(car, 1)
-        pedido.push(agregar)
-        console.log(pedido)
-        localStorage.setItem("pedido", JSON.stringify (pedido))
+        localStorage.setItem("pedido", JSON.stringify(pedido))
         Toast.fire({
             icon: 'success',
             title: `El producto se agregó al carrito :3`
         })
+        pedido.push(agregar)
+        console.log(pedido)
     }
 }
 
@@ -139,43 +155,114 @@ function verCarrito() {
     for (item of pedido) {
         let informacionProducto = productos.find(fruta => fruta.id === item.producto)
         let card = document.createElement("div")
-        
+        card.id = `producto${item.producto}`
         card.className = "orden"
-        card.innerHTML = ` <div>
+        card.innerHTML = `
         <div class="infoCarrito">
         <h4>${informacionProducto.producto}</h4>
         <p>Llevas  una cantidad de ${item.cantidad}, con un valor de ${informacionProducto.precio} pesos</p>
         </div>
-        </div>`
+        <button class="basurita" id="eliminarProducto${item.producto}" >
+            <img src="imagenes/trash-can-solid.svg" alt="imagen de contenedor de basura">
+            </button>
+        `
         carritoproductos.append(card)
-    }
+
+
+}
+
     compraTotal(pedido)
+    menosUno(pedido)
 
 }
 
-function cerrarCarrito(){
-    document.getElementById("mostrarCarrito").style.display ="none"
+function cerrarCarrito() {
+    document.getElementById("mostrarCarrito").style.display = "none"
 }
-function comprar(){
+function comprar() {
     document.getElementById("mostrarCarrito").style.display = "flex"
 
-    pedido.length >=1 ?  document.getElementById("SinProductos").style.display ="none" : document.getElementById("SinProductos").style.display ="inherit"
-    
+    pedido.length >= 1 ? document.getElementById("SinProductos").style.display = "none" : document.getElementById("SinProductos").style.display = "inherit"
+
     verCarrito(pedido)
 }
-function compraTotal(pedido){
+
+function menosUno(array){
+    array.forEach(item => {
+        
+        document.getElementById(`eliminarProducto${item.producto}`).addEventListener("click", ()=>{
+            let numeroOrden = document.getElementById(`producto${item.producto}`)
+            numeroOrden.remove()
+            let busquedaCarrito = pedido.find(m => m.producto == numeroOrden)
+            let index = pedido.indexOf(busquedaCarrito)
+            pedido.splice(index, 1)
+            pedido.length >= 1 ? document.getElementById("SinProductos").style.display = "none" : document.getElementById("SinProductos").style.display = "inherit"
+            localStorage.setItem("pedido", JSON.stringify(pedido))
+            compraTotal(pedido)
+
+
+        })
+    });
+        
+    
+}
+
+
+function vaciarCarrito() {
+    pedido = []
+    pedido.length >= 1 ? document.getElementById("SinProductos").style.display = "none" : document.getElementById("SinProductos").style.display = "inherit"
+    localStorage.setItem("pedido", JSON.stringify(pedido))
+    compraTotal(pedido)
+    carritoproductos.innerHTML = ""
+
+}
+function compraTotal(pedido) {
     totalCompra.innerHTML = ""
     let totalPedido = 0
-    
-    for (item of pedido){
-    let informacionProducto = productos.find(fruta => fruta.id === item.producto)
-    totalPedido = totalPedido + informacionProducto.precio
+
+    for (item of pedido) {
+        let informacionProducto = productos.find(fruta => fruta.id === item.producto)
+        totalPedido = totalPedido + informacionProducto.precio
         totalPedido == 0 ? totalCompra.innerHTML = `No hay productos en el carrito` : totalCompra.innerHTML = `El total del carrito es <strong></strong>`
         totalCompra.append(totalPedido)
+    }
 }
-    
+function finalizarCompra(){
 
+    if (pedido.length = 0){
+        Swal.fire(
+            'No hay productos en carrito',
+            'el carrito esta vacio :c',
+            'info'
+          )
+    }else{
+        pedido = []
+        swalWithBootstrapButtons.fire({
+            title: '¿Deseas finalizar la compra?',
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonText: '¡Sí, lo quiero ya!',
+            cancelButtonText: '¡No, lo pensaré!',
+            cancelButtonColor: `#ff7f50`,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                    '¡Gracias!',
+                    'Tu compra ha sido Exitosa :3',
+                    'success'
+                )
+        } else if (
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+            '¡Ohhhh, no!',
+            'tu compra no ha sido exitosa',
+            'error'
+            )
+        }
+    })
 }
-
+}
 
 

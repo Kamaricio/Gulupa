@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto Gulupa</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="CSS/Style.css">
 </head>
 
@@ -14,28 +15,69 @@
         <a href="index.html">GULUPA</a>
         <form class="busqueda" role="search">
             <input class="barraBusqueda" type="search" placeholder="¿Qué fruta deseas buscar?" aria-label="">
-            <button class="boton" type="submit" ><img src="imagenes/magnifying-glass-solid.svg" alt="Imagen de buscar"></button>
+            <button class="boton" type="submit"><img src="imagenes/magnifying-glass-solid.svg"
+                    alt="Imagen de buscar"></button>
         </form>
-        <div class="carrito"><img src="imagenes/cart-shopping-solid.svg" alt="imagen de un carrito de compras" onclick="comprar()"></div>
+        <div class="carrito"><img src="imagenes/cart-shopping-solid.svg" alt="imagen de un carrito de compras"
+                onclick="comprar()"></div>
 
     </header>
+    <section class="secctionLoader" > 
+       <div id="loader">
+        <h3>Cargando <br>productos</h3>
+        <svg>
+            <filter id="gooey">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="10"/>
+                <feColorMatrix values="
+                        1 0 0 0 0
+                        0 1 0 0 0
+                        0 0 1 0 0
+                        0 0 0 20 -10"></feColorMatrix>             
+
+            </filter>
+        </svg>
+        <div class="loader">
+            <span style="--i:1;"></span>
+            <span style="--i:2;"></span>
+            <span style="--i:3;"></span>
+            <span style="--i:4;"></span>
+            <span style="--i:5;"></span>
+            <span style="--i:6;"></span>
+            <span style="--i:7;"></span>
+            <span style="--i:8;"></span>
+            <span class="rotate" style="--j:0;"></span>
+            <span class="rotate" style="--j:1;"></span>
+            <span class="rotate" style="--j:2;"></span>
+            <span class="rotate" style="--j:3;"></span>
+            <span class="rotate" style="--j:4;"></span>
+            
+        </div>
+    </div>
     <div class="cuerpo">
-    <div id="container" class="container">
+        
+        <div id="container" class="container">
+        </div>
+        
     </div>
-    </div>
+</section>
+
     <div id="mostrarCarrito">
         <div id="tarjetaCarrito">
             <button id="cerrar" onclick="cerrarCarrito()" class="boton">Cerrar</button>
             <div id="contenedorPedido">
-
             </div>
             <div id="total">
             </div>
-                <div id="SinProductos">
-                    <p>No hay productos en el carrito</p>
-                </div>  
+            <div id="SinProductos">
+                <p>No hay productos en el carrito</p>
+            </div>
+            <div class="botones">
+                <button class="boton" id="BotonVaciar" onclick="vaciarCarrito()">Vaciar carrito</button>
+                <button class="boton" id="BotonFinalizarCompra" onclick="finalizarCompra()">Finalizar compra</button>
+            </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="JS/Main.js"></script>
 </body>

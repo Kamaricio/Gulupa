@@ -206,19 +206,19 @@ function agregarAlCarrito(libro){
 }
 function compraTotal(array){
     // reduce
-    // let acumulador = 0
-    // for(let book of array){
-    //     acumulador = acumulador + book.precio
-    // }
+    let acumulador = 0
+    for(let book of array){
+        acumulador = acumulador + book.precio
+    }
     
-    //acumulador con reduce
-    let total = array.reduce((acc, productoCarrito)=> acc + productoCarrito.precio ,0)
-    console.log("Acc con reduce " + total)
-    //ternario para mostrar en el html
-    total == 0 ?
-    precioTotal.innerHTML = `No hay productos agregados` :
-    precioTotal.innerHTML = `El total del carrito es <strong>${total}</strong>`
-    return total
+    // //acumulador con reduce
+    // let total = array.reduce((acc, productoCarrito)=> acc + productoCarrito.precio ,0)
+    // console.log("Acc con reduce " + total)
+    // //ternario para mostrar en el html
+    // total == 0 ?
+    // precioTotal.innerHTML = `No hay productos agregados` :
+    // precioTotal.innerHTML = `El total del carrito es <strong>${total}</strong>`
+    // return total
 }
 //functions ordenar:
 function ordenarMenorMayor(array){
