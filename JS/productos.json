@@ -1,0 +1,72 @@
+[
+    {
+        "id":1,
+        "tipo":"pulpa",
+        "producto":"Chontaduro",
+        "origen": "Región Occidental de la Cuenca Amazónica",
+        "precio": 5000
+    },
+     {
+        "id":2,
+        "tipo":"pulpa",
+        "producto":"Camu Camu",
+        "origen": "Amazonía occidental",
+        "precio": 6300
+    },
+        {
+        "id":3,
+        "tipo":"pulpa",
+        "producto":"Gulupa",
+        "origen": "Amazonía brasileña",
+        "precio": 5800
+    },
+     {
+        "id":4,
+        "tipo":"pulpa",
+        "producto":"Guama",
+        "origen": "Centroamérica",
+        "precio": 6700
+    },
+        {
+        "id":5,
+        "tipo":"pulpa",
+        "producto":"Asaí",
+        "origen": "Región Amazonica Colombiana",
+        "precio": 6900
+    },
+     {
+        "id":6,
+        "tipo":"Helado",
+        "producto":"Chontaduro con queso",
+        "origen": "Región Occidental de la Cuenca Amazónica",
+        "precio": 8500
+    },
+        {
+        "id":7,
+        "tipo":"Helado",
+        "producto":"Camu Camu y arequipe",
+        "origen": "Amazonía occidental",
+        "precio": 8000
+    },
+     {
+        "id":8,
+        "tipo":"Helado",
+        "producto":"Gulupa con chocolate",
+        "origen": "Amazonía brasileña",
+        "precio": 8800
+    },
+        {
+        "id":9,
+        "tipo":"Helado",
+        "producto":"Guama con leche condensada",
+        "origen": "Centroamérica",
+        "precio": 9300
+    },
+     {
+        "id":10,
+        "tipo":"Helado",
+        "producto":"Asaí con galleta",
+        "origen": "Región Amazonica Colombiana",
+        "precio": 9100
+    }
+]

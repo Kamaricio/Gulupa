@@ -29,35 +29,74 @@ const swalWithBootstrapButtons = Swal.mixin({
 class Productos {
     constructor(id, tipo, producto, origen, precio) {
         this.id = id,
-            this.tipo = tipo,
-            this.producto = producto
+        this.tipo = tipo,
+        this.producto = producto
         this.origen = origen,
-            this.precio = precio
+         this.precio = precio
     }
     informacionProducto() {
         console.log(` es produto es ${this.producto} y ayudarás a los campesinos e indigenas de ${this.origen}`)
     }
 }
-const producto1 = new Productos(1, "Pulpa", "Chontaduro", "Región Occidental de la Cuenca Amazónica", 5000)
-const producto2 = new Productos(2, "Pulpa", "Camu Camu", "Amazonía occidental", 6300)
-const producto3 = new Productos(3, "Pulpa", "Gulupa", "Amazonía brasileña", 5800)
-const producto4 = new Productos(4, "Pulpa", "Guama", "Centroamérica", 6700)
-const producto5 = new Productos(5, "Pulpa", "Asaí", "Región Amazonica Colombiana", 6900)
-const producto6 = new Productos(6, "Helado", "Chontaduro con queso", "Región Occidental de la Cuenca Amazónica", 8500)
-const producto7 = new Productos(7, "Helado", "Camu Camu y arequipe", "Amazonía occidental", 8000)
-const producto8 = new Productos(8, "Helado", "Gulupa con chocolate", "Amazonía brasileña", 8800)
-const producto9 = new Productos(9, "Helado", "Guama con leche condensada", "Centroamérica", 9300)
-const producto10 = new Productos(10, "Helado", "Asaí con galleta", "Región Amazonica Colombiana", 9100)
+
+class Carrito {
+    constructor(producto, cantidad) {
+        this.producto = producto,
+        this.cantidad = cantidad
+    }
+    sumaProducto() {
+        this.cantidad = this.cantidad + 1
+    }
+    restaproducto(){
+        this.cantidad = this.cantidad - 1
+    }
+}
+
+const CargaProductos = async () =>{
+    const resp = await fetch("JS/productos.json")
+    const data = await resp.json()
+    console.log(data)
+    for (let fruta of data){
+        let produtoNuevo = new Productos (fruta.id, fruta.tipo, fruta.producto, fruta.origen, fruta.precio)
+        productos.push(produtoNuevo)
+        localStorage.setItem("productos", JSON.stringify(productos))
+
+        }
+} 
+
+
+
+// const producto1 = new Productos(1, "Pulpa", "Chontaduro", "Región Occidental de la Cuenca Amazónica", 5000)
+// const producto2 = new Productos(2, "Pulpa", "Camu Camu", "Amazonía occidental", 6300)
+// const producto3 = new Productos(3, "Pulpa", "Gulupa", "Amazonía brasileña", 5800)
+// const producto4 = new Productos(4, "Pulpa", "Guama", "Centroamérica", 6700)
+// const producto5 = new Productos(5, "Pulpa", "Asaí", "Región Amazonica Colombiana", 6900)
+// const producto6 = new Productos(6, "Helado", "Chontaduro con queso", "Región Occidental de la Cuenca Amazónica", 8500)
+// const producto7 = new Productos(7, "Helado", "Camu Camu y arequipe", "Amazonía occidental", 8000)
+// const producto8 = new Productos(8, "Helado", "Gulupa con chocolate", "Amazonía brasileña", 8800)
+// const producto9 = new Productos(9, "Helado", "Guama con leche condensada", "Centroamérica", 9300)
+// const producto10 = new Productos(10, "Helado", "Asaí con galleta", "Región Amazonica Colombiana", 9100)
 
 // construccion del array
-const productos = [producto1, producto2, producto3, producto4, producto5, producto6, producto7, producto8, producto9, producto10]
-const pulpasArray = [producto1, producto2, producto3, producto4, producto5]
-const heladosArray = [producto6, producto7, producto8, producto9, producto10]
+//const pulpasArray = [producto1, producto2, producto3, producto4, producto5]
+//const heladosArray = [producto6, producto7, producto8, producto9, producto10]
+let productos = []
+if (localStorage.getItem("productos")) {
+    productos = JSON.parse(localStorage.getItem("productos"))
+    console.log (productos)
+} else {
+    CargaProductos()
+}
+
+
 let pedido = []
 if (localStorage.getItem("pedido")) {
-    pedido = JSON.parse(localStorage.getItem("pedido"))
-    console.log (pedido)
+    for (let fruta of JSON.parse(localStorage.getItem("pedido"))){
+    let productoPedido = new Carrito (fruta.producto, fruta.cantidad)
+    console.log (productoPedido)
+    pedido.push(productoPedido)}
 } else {
+    CargaProductos()
     localStorage.setItem("pedido", JSON.stringify(pedido))
 }
 console.log(pedido)
@@ -101,19 +140,6 @@ setTimeout(()=>{
 catalogoProductos(productos)
 },4000)
 
-
-class Carrito {
-    constructor(producto, cantidad) {
-        this.producto = producto,
-        this.cantidad = cantidad
-    }
-    sumaProducto() {
-        this.cantidad = this.cantidad + 1
-    }
-    restaproducto(){
-        this.cantidad = this.cantidad - 1
-    }
-}
 
 
 function agregarAlCarrito(car) {
@@ -222,21 +248,22 @@ function compraTotal(pedido) {
 
     for (item of pedido) {
         let informacionProducto = productos.find(fruta => fruta.id === item.producto)
-        totalPedido = totalPedido + informacionProducto.precio
+        totalPedido = totalPedido + (informacionProducto.precio * item.cantidad)
         totalPedido == 0 ? totalCompra.innerHTML = `No hay productos en el carrito` : totalCompra.innerHTML = `El total del carrito es <strong></strong>`
         totalCompra.append(totalPedido)
     }
 }
 function finalizarCompra(){
 
-    if (pedido.length = 0){
+    if (pedido.length <= 0){
+        
         Swal.fire(
             'No hay productos en carrito',
             'el carrito esta vacio :c',
             'info'
           )
+        
     }else{
-        pedido = []
         swalWithBootstrapButtons.fire({
             title: '¿Deseas finalizar la compra?',
             icon: 'info',
@@ -252,6 +279,7 @@ function finalizarCompra(){
                     'Tu compra ha sido Exitosa :3',
                     'success'
                 )
+                vaciarCarrito()
         } else if (
             result.dismiss === Swal.DismissReason.cancel
         ) {
@@ -262,6 +290,8 @@ function finalizarCompra(){
             )
         }
     })
+    
+        
 }
 }
 
