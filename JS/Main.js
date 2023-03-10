@@ -1,111 +1,3 @@
-//Constantes
-pulpas = 5000
-helados = 8000
-malteadas = 14000
-Postres = 12000
-iva = 1.19
-
-const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 2000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-})
-
-const swalWithBootstrapButtons = Swal.mixin({
-    customClass: {
-        confirmButton: 'btn btn-success',
-        cancelButton: 'btn btn-danger'
-    },
-    buttonsStyling: false
-    })
-
-// Funcion constructora
-class Productos {
-    constructor(id, tipo, producto, origen, precio) {
-        this.id = id,
-        this.tipo = tipo,
-        this.producto = producto
-        this.origen = origen,
-         this.precio = precio
-    }
-    informacionProducto() {
-        console.log(` es produto es ${this.producto} y ayudarás a los campesinos e indigenas de ${this.origen}`)
-    }
-}
-
-class Carrito {
-    constructor(producto, cantidad) {
-        this.producto = producto,
-        this.cantidad = cantidad
-    }
-    sumaProducto() {
-        this.cantidad = this.cantidad + 1
-    }
-    restaproducto(){
-        this.cantidad = this.cantidad - 1
-    }
-}
-
-const CargaProductos = async () =>{
-    const resp = await fetch("JS/productos.json")
-    const data = await resp.json()
-    console.log(data)
-    for (let fruta of data){
-        let produtoNuevo = new Productos (fruta.id, fruta.tipo, fruta.producto, fruta.origen, fruta.precio)
-        productos.push(produtoNuevo)
-        localStorage.setItem("productos", JSON.stringify(productos))
-
-        }
-} 
-
-
-
-// const producto1 = new Productos(1, "Pulpa", "Chontaduro", "Región Occidental de la Cuenca Amazónica", 5000)
-// const producto2 = new Productos(2, "Pulpa", "Camu Camu", "Amazonía occidental", 6300)
-// const producto3 = new Productos(3, "Pulpa", "Gulupa", "Amazonía brasileña", 5800)
-// const producto4 = new Productos(4, "Pulpa", "Guama", "Centroamérica", 6700)
-// const producto5 = new Productos(5, "Pulpa", "Asaí", "Región Amazonica Colombiana", 6900)
-// const producto6 = new Productos(6, "Helado", "Chontaduro con queso", "Región Occidental de la Cuenca Amazónica", 8500)
-// const producto7 = new Productos(7, "Helado", "Camu Camu y arequipe", "Amazonía occidental", 8000)
-// const producto8 = new Productos(8, "Helado", "Gulupa con chocolate", "Amazonía brasileña", 8800)
-// const producto9 = new Productos(9, "Helado", "Guama con leche condensada", "Centroamérica", 9300)
-// const producto10 = new Productos(10, "Helado", "Asaí con galleta", "Región Amazonica Colombiana", 9100)
-
-// construccion del array
-//const pulpasArray = [producto1, producto2, producto3, producto4, producto5]
-//const heladosArray = [producto6, producto7, producto8, producto9, producto10]
-let productos = []
-if (localStorage.getItem("productos")) {
-    productos = JSON.parse(localStorage.getItem("productos"))
-    console.log (productos)
-} else {
-    CargaProductos()
-}
-
-
-let pedido = []
-if (localStorage.getItem("pedido")) {
-    for (let fruta of JSON.parse(localStorage.getItem("pedido"))){
-    let productoPedido = new Carrito (fruta.producto, fruta.cantidad)
-    console.log (productoPedido)
-    pedido.push(productoPedido)}
-} else {
-    CargaProductos()
-    localStorage.setItem("pedido", JSON.stringify(pedido))
-}
-console.log(pedido)
-
-//declaracion al Dom
-let plantilla = document.getElementById("container")
-let carritoproductos = document.getElementById("contenedorPedido")
-let totalCompra = document.getElementById("total")
-let loader = document.getElementById("loader")
 
 //plantilla catalogo de productos
 
@@ -132,7 +24,7 @@ function catalogoProductos(productos) {
         CapturaProductos.append(plantillaCard)
 
     }
-    console.log(plantilla)
+    //console.log(plantilla)
 }
 setTimeout(()=>{
     loader.innerHTML=""
@@ -140,7 +32,7 @@ setTimeout(()=>{
 catalogoProductos(productos)
 },4000)
 
-
+//Funcion para agregar al array carrito
 
 function agregarAlCarrito(car) {
     let busquedaCarrito = pedido.find(m => m.producto == car)
@@ -170,11 +62,14 @@ function agregarAlCarrito(car) {
     }
 }
 
+// funcion toogle navbar
 
 window.addEventListener("scroll", function () {
     let header = document.querySelector("header")
     header.classList.toggle("claro", window.scrollY > 0)
 })
+
+// funcion platilla carrito
 
 function verCarrito() {
     carritoproductos.innerHTML = ""
@@ -261,7 +156,7 @@ function finalizarCompra(){
             'No hay productos en carrito',
             'el carrito esta vacio :c',
             'info'
-          )
+        )
         
     }else{
         swalWithBootstrapButtons.fire({
@@ -295,4 +190,26 @@ function finalizarCompra(){
 }
 }
 
+// evento del buscador
 
+encuentro.addEventListener("input", ()=>{
+    buscarProducto(encuentro.value, productos)
+})
+
+// function del buscador
+
+function buscarProducto(busqueda, productos){
+    plantilla.innerHTML = ""
+    let busquedaComida = productos.filter(
+    (product) => product.producto.toLowerCase().includes(busqueda) || product.tipo.toLowerCase().includes(busqueda)
+)
+    if (busquedaComida.length == 0){
+        noCoincidencia.innerHTML = `No hay coincidencias`
+        catalogoProductos(busquedaComida) 
+
+    }  else{
+        noCoincidencia.innerHTML = ``
+        catalogoProductos(busquedaComida) 
+    }
+
+}

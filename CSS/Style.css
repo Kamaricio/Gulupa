@@ -163,7 +163,6 @@ transform-origin: top;
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-bottom: 20px;
     color: rgba(255, 255, 255, 0.623);
 flex-direction: column;
 }
@@ -414,4 +413,18 @@ svg{
 }
 .swal2-container.swal2-top, .swal2-container.swal2-center, .swal2-container.swal2-bottom {
     z-index: 100000000000;
+}
+
+#noCoincidencia{
+    position: absolute;
+    color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 100vw;
+    font-size: 1.3em;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    
 }
