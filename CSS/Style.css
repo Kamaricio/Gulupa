@@ -428,3 +428,60 @@ svg{
     letter-spacing: 3px;
     
 }
+
+footer{
+    width: 100vw;
+    height: 25vh;
+    background-color: whitesmoke;
+    padding: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    align-items: center;
+
+}
+footer h4{
+    color: blueviolet;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 50px;
+}
+footer ul{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    list-style-type: none;
+    width: 20vw;
+}
+
+footer li{
+    margin: 20px;
+    width: 20px;
+    color: #332d36;
+}
+.fa-github,.fa-instagram, .fa-linkedin-in{
+    color: #332d36;
+    width: 20px;
+    font-size: 2.8em;
+}
+.fa-github:hover,.fa-instagram:hover, .fa-linkedin-in:hover{
+    color: #8a2be2;
+    font-size: 3.5em;
+    transition: 0.6s;
+}
+.informacion{
+    margin: 50px;
+
+}
+.informacion h3{
+    font-size: 19px;
+    color: #8a2be2;
+    font-weight: bold;
+}
+.contacto{
+    margin-top: 50px;
+}
